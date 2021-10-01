@@ -1,0 +1,98 @@
+ public class Map 
+    {
+        public string[,] MapArray = 
+            { {"XXXXXXXXXXXXXX"},
+              {"X............X"},
+              {"X............X"},
+              {"X............X"},
+              {"X............X"},
+              {"X............X"},
+              {"X............X"},
+              {"XXXXXXXXXXXXXX"} };      
+        
+        private string[] EnemyArray ;
+
+        protected int Width;
+        public int GetWidth() { return Width; }
+
+        protected int Height;
+        public int GetHeight() { return Height; }
+
+
+
+        protected int Random(int min, int max)
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(min, max);
+            return randomNumber;
+        }
+
+        public Map(int minW, int maxW, int minH, int maxH, int numE)
+        {
+            Width = Random(minW, maxW);
+            Height = Random(minH, maxH);
+            MapArray = new string[Width,Height];
+
+            for (int i=1; i< Width; i++)
+            { MapArray[i, 0] = "X"; }
+            for (int i = 1; i < Width; i++)
+            {MapArray[i, Height] = "X"; }
+            for (int i = 1; i < Height; i++)
+            {MapArray[0, i] = "X"; }
+            for (int i = 1; i < Height; i++)
+            {MapArray[Width, i] = "X"; }
+
+            for (int k = 1; k < Width-2; k++)
+            { for (int i = 1; i < Height; i++)
+                {MapArray[k, i] = "."; }
+            }
+
+           EnemyArray = new string[numE];
+
+            Create("H");
+            for (int i = 1; i < EnemyArray.Length; i++)
+            { Create("G"); }
+
+            
+            for (int k = 0; k < Width; k++)
+            {
+                for (int i = 0; i < Height; i++)
+                { MapArray[k, i] = "."; }
+            }
+            UpdateVision();
+        }
+
+        private void Create(string symbol )
+        {Random random = new Random();
+            bool check = false;
+            int x;
+            int y;
+
+            while (check == false)
+            { 
+            x = random.Next(0, Width);
+             y = random.Next(0, Height);
+          
+            
+            
+
+           if (MapArray[y,x] == ".")
+            { MapArray[y, x] = symbol;
+                check = true;
+            }
+           else if (MapArray[y, x] != ".")
+            { check = false; } }
+           
+
+        }
+
+        public void UpdateVision()
+        { Character.VisionArray = new int[Width,Height];
+            for (int k = 0; k < Width; k++)
+            {
+                for (int i = 0; i < Height; i++)
+                { MapArray[k, i] = Character.VisionArray[k,i]; }
+            }
+             }
+
+    }
