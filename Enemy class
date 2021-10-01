@@ -1,0 +1,21 @@
+  public abstract class Enemy : Character
+    {
+        protected static int Random()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 5);
+            return randomNumber;
+        }
+
+
+        public Enemy(int x, int y, int damage, int hp, int maxHp, string symbol) : base(x, y, symbol)
+        {
+            Character(x,y,symbol);
+            Damage = damage;
+            HP = hp;
+            MaxHP = maxHp;
+        }
+
+        public string ToString()
+        { return "Goblin at [" + Convert.ToString(X) + "," + Convert.ToString(Y) + "]  (" + Convert.ToString(Damage) + " dmg)"; }
+    }
